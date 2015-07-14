@@ -118,6 +118,8 @@ class jira (
   $proxy = {},
   # Options for the AJP connector
   $ajp   = {},
+  # Optional additional connector
+  $connector = {},
   # Context path (usualy used in combination with a reverse proxy)
   $contextpath = '',
 
@@ -132,6 +134,7 @@ class jira (
   validate_re($contextpath, ['^$', '^/.*'])
   validate_hash($resources)
   validate_hash($ajp)
+  validate_hash($connector)
 
   if $::jira_version {
     # If the running version of JIRA is less than the expected version of JIRA

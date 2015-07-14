@@ -68,6 +68,14 @@
 <% end -%>
         />
 
+<% if @connector and ! @connector.empty? -%>
+        <Connector enableLookups="false" URIEncoding="UTF-8"
+<%   @connector.sort.each do |key, value| -%>
+                   <%= key %> = <%= "\"#{value}\"" %>
+<%   end -%>
+        />
+<% end -%>
+
         <!--
         ====================================================================================
 
