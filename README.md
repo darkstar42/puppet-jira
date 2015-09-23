@@ -340,7 +340,7 @@ IP address to listen on. Defaults to all addresses.
 
 #####`$tomcatPort`
 
-Port to listen on, defaults to 8080,
+Port to listen on, defaults to '8080'
 
 #####`$tomcatMaxThreads`
 
@@ -349,6 +349,30 @@ Defaults to '150'
 #####`$tomcatAcceptCount`
 
 Defaults to '100'
+
+#####`$tomcatNativeSsl`
+
+Enable https/ssl support. Defaults to 'false'. See https://confluence.atlassian.com/display/JIRA/Running+JIRA+over+SSL+or+HTTPS for additional info. The java keystore can be managed with the puppetlabs-java\_ks module or manually with `keytool -genkey -alias jira -keyalg RSA -sigalg SHA256withRSA -keystore /home/jira/jira.ks`
+
+#####`$tomcatHttpsPort`
+
+https/ssl Port to listen on, defaults to 8443.
+
+#####`$tomcatKeyAlias`
+
+The alias name of the java keystore entry. Defaults to 'jira'.
+
+#####`$tomcatKeystoreFile`
+
+Location of java keystore file. Defaults to '/home/jira/jira.jks'
+
+#####`$tomcatKeystorePass`
+
+Password to access java keystore. Defaults to 'changeit'
+
+#####`$tomcatKeystoreType`
+
+Defaults to 'JKS'. Valid options are 'JKS', 'PKCS12', 'JCEKS'.
 
 ##Usage
 
@@ -367,7 +391,7 @@ Defaults to '100'
     }
 ```
 
-### A Hiera example 
+### Hiera examples 
 
 This example is used in production for 2000 users in an traditional enterprise environment. Your mileage may vary. The dbpassword can be stored using eyaml hiera extension.
 
@@ -402,6 +426,18 @@ jira::proxy:
   proxyName: 'jira.example.co.za'
   proxyPort: '443'
 jira::contextpath: '/jira'
+```
+
+These additional and substituted parameters are used in production in an traditional enterprise environment with an Oracle 11g remote database and Oracle 8 JDK. Your mileage may vary.
+
+```yaml
+jira::db:            'oracle'
+jira::dbname:        '<dbname>'
+jira::dbport:        '1526'
+jira::dbdriver:      'oracle.jdbc.OracleDriver'
+jira::dbtype:        'oracle10g'
+jira::dburl:         'jdbc:oracle:thin:@//dbvip.example.co.za:1526/<dbname>'
+jira::javahome:      '/usr/lib/jvm/jdk-8-oracle-x64'
 ```
 
 Reverse proxy can be configured as a hash as part of the JIRA resource
